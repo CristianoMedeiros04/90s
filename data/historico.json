@@ -1,0 +1,29 @@
+[
+  {
+    "id": "hist_teste_2",
+    "titulo": "5 Dicas de Produtividade",
+    "conteudo": "Primeira dica: organize sua mesa. Segunda dica: use técnica pomodoro...",
+    "formato": "Lista útil",
+    "instrucao": "Lista de produtividade",
+    "data": "2025-07-21 14:49:23",
+    "data_formatada": "21/07/2025 às 14:49"
+  },
+  {
+    "id": "hist_teste_3",
+    "titulo": "O Segredo dos Milionários",
+    "conteudo": "Você sabia que existe um segredo que todos os milionários conhecem?...",
+    "formato": "Revelação Progressiva",
+    "instrucao": "Vídeo sobre riqueza",
+    "data": "2025-07-20 14:49:23",
+    "data_formatada": "20/07/2025 às 14:49"
+  },
+  {
+    "id": "hist_teste_4",
+    "titulo": "Por que Exercitar é Ruim",
+    "conteudo": "Todo mundo diz que exercitar faz bem, mas eu vou te mostrar o contrário...",
+    "formato": "Contradição Intencional",
+    "instrucao": "Vídeo polêmico sobre exercícios",
+    "data": "2025-07-19 14:49:23",
+    "data_formatada": "19/07/2025 às 14:49"
+  }
+]

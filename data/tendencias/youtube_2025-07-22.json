@@ -1,0 +1,70 @@
+{
+  "platform": "youtube",
+  "timestamp": "2025-07-22T01:15:55.969396",
+  "trends": [
+    {
+      "plataforma": "youtube",
+      "titulo": "Gameplay viral da semana",
+      "descricao": "Categoria com milhões de visualizações esta semana",
+      "link": "https://youtube.com/results?search_query=Gameplay+viral+da+semana",
+      "data_coleta": "2025-07-22",
+      "fonte": "nox_pattern"
+    },
+    {
+      "plataforma": "youtube",
+      "titulo": "Receitas que estão bombando",
+      "descricao": "Categoria com milhões de visualizações esta semana",
+      "link": "https://youtube.com/results?search_query=Receitas+que+estão+bombando",
+      "data_coleta": "2025-07-22",
+      "fonte": "nox_pattern"
+    },
+    {
+      "plataforma": "youtube",
+      "titulo": "Vlogs de viagem em alta",
+      "descricao": "Categoria com milhões de visualizações esta semana",
+      "link": "https://youtube.com/results?search_query=Vlogs+de+viagem+em+alta",
+      "data_coleta": "2025-07-22",
+      "fonte": "nox_pattern"
+    },
+    {
+      "plataforma": "youtube",
+      "titulo": "Tutoriais de maquiagem trending",
+      "descricao": "Categoria com milhões de visualizações esta semana",
+      "link": "https://youtube.com/results?search_query=Tutoriais+de+maquiagem+trending",
+      "data_coleta": "2025-07-22",
+      "fonte": "nox_pattern"
+    },
+    {
+      "plataforma": "youtube",
+      "titulo": "Música brasileira viral",
+      "descricao": "Categoria com milhões de visualizações esta semana",
+      "link": "https://youtube.com/results?search_query=Música+brasileira+viral",
+      "data_coleta": "2025-07-22",
+      "fonte": "nox_pattern"
+    },
+    {
+      "plataforma": "youtube",
+      "titulo": "Comédia que explodiu",
+      "descricao": "Categoria com milhões de visualizações esta semana",
+      "link": "https://youtube.com/results?search_query=Comédia+que+explodiu",
+      "data_coleta": "2025-07-22",
+      "fonte": "nox_pattern"
+    },
+    {
+      "plataforma": "youtube",
+      "titulo": "Tecnologia em destaque",
+      "descricao": "Categoria com milhões de visualizações esta semana",
+      "link": "https://youtube.com/results?search_query=Tecnologia+em+destaque",
+      "data_coleta": "2025-07-22",
+      "fonte": "nox_pattern"
+    },
+    {
+      "plataforma": "youtube",
+      "titulo": "Fitness e saúde em alta",
+      "descricao": "Categoria com milhões de visualizações esta semana",
+      "link": "https://youtube.com/results?search_query=Fitness+e+saúde+em+alta",
+      "data_coleta": "2025-07-22",
+      "fonte": "nox_pattern"
+    }
+  ]
+}

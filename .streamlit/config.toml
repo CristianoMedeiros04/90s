@@ -1,0 +1,11 @@
+# Configuração Streamlit CORRIGIDA - Sem Opções Obsoletas
+# .streamlit/config.toml
+
+[theme]
+base="dark"
+primaryColor="#FF0050"                 # Botão primário
+backgroundColor="#151f2c"              # Fundo branco
+secondaryBackgroundColor="#182433"     # Caixas em cinza claro
+textColor="#c4c7ca"                    # Texto
+
+

@@ -1,0 +1,54 @@
+{
+  "platform": "tiktok",
+  "timestamp": "2025-07-22T01:15:55.932883",
+  "trends": [
+    {
+      "plataforma": "tiktok",
+      "titulo": "Desafio de dança viral #1",
+      "descricao": "Conteúdo viral com milhões de visualizações",
+      "link": "https://tiktok.com",
+      "data_coleta": "2025-07-22",
+      "fonte": "exolyt_pattern"
+    },
+    {
+      "plataforma": "tiktok",
+      "titulo": "Receita rápida que viralizou #2",
+      "descricao": "Conteúdo viral com milhões de visualizações",
+      "link": "https://tiktok.com",
+      "data_coleta": "2025-07-22",
+      "fonte": "exolyt_pattern"
+    },
+    {
+      "plataforma": "tiktok",
+      "titulo": "Transformação incrível #3",
+      "descricao": "Conteúdo viral com milhões de visualizações",
+      "link": "https://tiktok.com",
+      "data_coleta": "2025-07-22",
+      "fonte": "exolyt_pattern"
+    },
+    {
+      "plataforma": "tiktok",
+      "titulo": "Hack de vida que funciona #4",
+      "descricao": "Conteúdo viral com milhões de visualizações",
+      "link": "https://tiktok.com",
+      "data_coleta": "2025-07-22",
+      "fonte": "exolyt_pattern"
+    },
+    {
+      "plataforma": "tiktok",
+      "titulo": "Trend de comédia #5",
+      "descricao": "Conteúdo viral com milhões de visualizações",
+      "link": "https://tiktok.com",
+      "data_coleta": "2025-07-22",
+      "fonte": "exolyt_pattern"
+    },
+    {
+      "plataforma": "tiktok",
+      "titulo": "Tutorial que explodiu #6",
+      "descricao": "Conteúdo viral com milhões de visualizações",
+      "link": "https://tiktok.com",
+      "data_coleta": "2025-07-22",
+      "fonte": "exolyt_pattern"
+    }
+  ]
+}

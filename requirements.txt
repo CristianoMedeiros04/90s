@@ -1,0 +1,17 @@
+streamlit
+anthropic
+python-dotenv
+beautifulsoup4
+requests
+yt-dlp
+openai-whisper
+scrapy
+selenium
+webdriver-manager
+schedule
+plotly
+python-docx
+
+
+streamlit-option-menu
+

@@ -1,0 +1,70 @@
+{
+  "platform": "instagram",
+  "timestamp": "2025-07-22T01:14:01.760087",
+  "trends": [
+    {
+      "plataforma": "instagram",
+      "titulo": "Stories com enquetes interativas",
+      "descricao": "Formato de conteúdo com alto engajamento no Instagram",
+      "link": "https://instagram.com/explore/tags/stories",
+      "data_coleta": "2025-07-22",
+      "fonte": "trending_pattern"
+    },
+    {
+      "plataforma": "instagram",
+      "titulo": "Reels de transformação",
+      "descricao": "Formato de conteúdo com alto engajamento no Instagram",
+      "link": "https://instagram.com/explore/tags/reels",
+      "data_coleta": "2025-07-22",
+      "fonte": "trending_pattern"
+    },
+    {
+      "plataforma": "instagram",
+      "titulo": "Carrossel de dicas rápidas",
+      "descricao": "Formato de conteúdo com alto engajamento no Instagram",
+      "link": "https://instagram.com/explore/tags/carrossel",
+      "data_coleta": "2025-07-22",
+      "fonte": "trending_pattern"
+    },
+    {
+      "plataforma": "instagram",
+      "titulo": "OOTD (Outfit of the Day) viral",
+      "descricao": "Formato de conteúdo com alto engajamento no Instagram",
+      "link": "https://instagram.com/explore/tags/ootd",
+      "data_coleta": "2025-07-22",
+      "fonte": "trending_pattern"
+    },
+    {
+      "plataforma": "instagram",
+      "titulo": "Receitas em vídeo curto",
+      "descricao": "Formato de conteúdo com alto engajamento no Instagram",
+      "link": "https://instagram.com/explore/tags/receitas",
+      "data_coleta": "2025-07-22",
+      "fonte": "trending_pattern"
+    },
+    {
+      "plataforma": "instagram",
+      "titulo": "Antes e depois impressionante",
+      "descricao": "Formato de conteúdo com alto engajamento no Instagram",
+      "link": "https://instagram.com/explore/tags/antes",
+      "data_coleta": "2025-07-22",
+      "fonte": "trending_pattern"
+    },
+    {
+      "plataforma": "instagram",
+      "titulo": "Tutorial de maquiagem express",
+      "descricao": "Formato de conteúdo com alto engajamento no Instagram",
+      "link": "https://instagram.com/explore/tags/tutorial",
+      "data_coleta": "2025-07-22",
+      "fonte": "trending_pattern"
+    },
+    {
+      "plataforma": "instagram",
+      "titulo": "Trend de dança no Reels",
+      "descricao": "Formato de conteúdo com alto engajamento no Instagram",
+      "link": "https://instagram.com/explore/tags/trend",
+      "data_coleta": "2025-07-22",
+      "fonte": "trending_pattern"
+    }
+  ]
+}

@@ -1,0 +1,363 @@
+"""
+Página React - Geração de roteiros estilo React baseados em vídeos
+"""
+import streamlit as st
+from datetime import datetime
+from services.video_processing import (
+    extract_transcription_from_url, validate_video_url, 
+    extract_video_info, select_best_segment
+)
+from services.ai_agents import generate_react_script
+from utils.helpers import salvar_roteiro
+from components.layout import (
+    render_status_card, render_roteiro_display, render_statistics_section
+)
+
+def render_react_page():
+    """Renderiza a página principal de React"""
+    st.header("🎭 React")
+    
+    
+    # Informações sobre a funcionalidade
+    with st.expander("ℹ️ Como funciona", expanded=False):
+        st.markdown("""
+        **Fluxo da página React:**
+        
+        1. **Cole o link do vídeo** que você quer usar como base
+        2. **Descreva o vídeo** e o tipo de abordagem desejada
+        3. **Escolha o estilo de React:**
+           - **React Padrão**: Mostra o trecho + headline + conteúdo + posicionamento
+           - **React Bate-Bola**: Headline + bate-bola (trecho + reação) + posicionamento
+        4. **Gere o roteiro** personalizado
+        
+        **Plataformas suportadas:** YouTube, TikTok, Instagram
+        """)
+    
+    # Formulário principal
+    with st.form("form_react"):
+        st.markdown("### 📲 Configuração do React")
+        
+        # Input do link do vídeo
+        video_url = st.text_input(
+            "🔗 Link do vídeo:",
+            placeholder="https://www.youtube.com/watch?v=...",
+            help="Cole aqui o link do vídeo que você quer usar como base para o React"
+        )
+        
+        # Descrição e abordagem
+        descricao_video = st.text_area(
+            "📝 Descreva o vídeo e o tipo de abordagem desejada:",
+            placeholder="Ex: Vídeo sobre investimentos para iniciantes. Quero focar na parte onde ele fala sobre diversificação...",
+            height=100,
+            help="Descreva o conteúdo do vídeo e que tipo de abordagem você quer dar no seu React"
+        )
+        
+        # Seleção do estilo de React
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            estilo_react = st.radio(
+                "🎬 Estilo de React:",
+                ["React Padrão", "React Bate-Bola"],
+                help="Escolha o formato do seu vídeo React"
+            )
+        
+        with col2:
+            # Explicação dos estilos
+            if estilo_react == "React Padrão":
+                st.info("""
+                **React Padrão:**
+                1. Trecho do vídeo (30-50s)
+                2. Headline (3-10s)
+                3. Conteúdo principal (15-30s)
+                4. Posicionamento + CTA
+                """)
+            else:
+                st.info("""
+                **React Bate-Bola:**
+                1. Headline (3-5s)
+                2. Bate-bola: Trecho + Reação
+                3. Posicionamento + CTA
+                """)
+        
+        # Botão de geração
+        gerar_roteiro = st.form_submit_button("🚀 Gerar Roteiro React", type="primary")
+    
+    # Processamento quando o formulário é submetido
+    if gerar_roteiro:
+        if not video_url.strip():
+            st.error("❌ Por favor, adicione o link do vídeo.")
+            return
+        
+        if not descricao_video.strip():
+            st.error("❌ Por favor, descreva o vídeo e a abordagem desejada.")
+            return
+        
+        # Valida a URL
+        url_valida, mensagem_validacao = validate_video_url(video_url)
+        
+        if not url_valida:
+            st.error(f"❌ {mensagem_validacao}")
+            return
+        
+        # Processa o vídeo
+        processar_video_react(video_url, descricao_video, estilo_react)
+    
+    # Exibe resultado se houver
+    if "roteiro_react_atual" in st.session_state:
+        exibir_resultado_react()
+
+
+def processar_video_react(video_url, descricao_video, estilo_react):
+    """Processa o vídeo e gera o roteiro React"""
+    
+    try:
+        # Extrai informações do vídeo
+        with st.spinner("📹 Analisando vídeo..."):
+            video_info = extract_video_info(video_url)
+            
+            # Mostra informações do vídeo
+            col1, col2, col3, col4 = st.columns(4)
+            with col1:
+                st.metric("Plataforma", video_info["platform"])
+            with col2:
+                st.metric("Duração", video_info["duration"])
+            with col3:
+                st.write(f"**Título:** {video_info['title']}")
+            with col4:
+                st.write(f"**Autor:** {video_info['author']}")
+        
+        # Extrai transcrição
+        with st.spinner("🎤 Extraindo transcrição..."):
+            transcricao = extract_transcription_from_url(video_url)
+            
+            if not transcricao:
+                st.error("❌ Não foi possível extrair a transcrição do vídeo.")
+                return
+            
+            # Mostra prévia da transcrição
+            with st.expander("📄 Transcrição extraída", expanded=False):
+                st.text_area("Conteúdo:", value=transcricao, height=200, disabled=True)
+        
+        # Seleciona melhor segmento automaticamente
+        with st.spinner("✂️ Selecionando melhor segmento..."):
+            segmento_selecionado = select_best_segment(transcricao, target_duration=45)
+            
+            st.success(f"✅ Segmento selecionado ({len(segmento_selecionado.split())} palavras)")
+            
+            with st.expander("📝 Segmento selecionado", expanded=True):
+                st.text_area("Trecho para o React:", value=segmento_selecionado, height=150, disabled=True)
+        
+        # Gera roteiro com IA
+        with st.spinner("🤖 Gerando roteiro React..."):
+            roteiro_react = generate_react_script(
+                transcription=segmento_selecionado,
+                instrucoes=descricao_video,
+                estilo_react=estilo_react
+            )
+            
+            if roteiro_react:
+                # Salva no estado da sessão
+                st.session_state["roteiro_react_atual"] = {
+                    "conteudo": roteiro_react,
+                    "video_url": video_url,
+                    "video_info": video_info,
+                    "transcricao": transcricao,
+                    "segmento": segmento_selecionado,
+                    "descricao": descricao_video,
+                    "estilo": estilo_react,
+                    "data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                }
+                
+                st.success("✅ Roteiro React gerado com sucesso!")
+            else:
+                st.error("❌ Erro ao gerar roteiro. Tente novamente.")
+                
+    except Exception as e:
+        st.error(f"❌ Erro no processamento: {str(e)}")
+
+
+def exibir_resultado_react():
+    """Exibe o resultado do roteiro React gerado"""
+    
+    st.markdown("---")
+    st.subheader("🎬 Roteiro React Gerado")
+    
+    roteiro_data = st.session_state["roteiro_react_atual"]
+    
+    # Informações do vídeo original
+    with st.expander("📹 Informações do vídeo original", expanded=False):
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.write(f"**🔗 URL:** {roteiro_data['video_url']}")
+            st.write(f"**📱 Plataforma:** {roteiro_data['video_info']['platform']}")
+            st.write(f"**⏱️ Duração:** {roteiro_data['video_info']['duration']}")
+        
+        with col2:
+            st.write(f"**📝 Título:** {roteiro_data['video_info']['title']}")
+            st.write(f"**👤 Autor:** {roteiro_data['video_info']['author']}")
+            st.write(f"**🎭 Estilo:** {roteiro_data['estilo']}")
+        
+        st.write(f"**💭 Descrição/Instruções:** {roteiro_data['descricao']}")
+    
+    # Título editável
+    titulo_roteiro = st.text_input(
+        "📝 Título do roteiro:",
+        value=f"React - {roteiro_data['video_info']['title'][:50]}...",
+        key="titulo_react_edicao"
+    )
+    
+    # Conteúdo editável
+    conteudo_editado = st.text_area(
+        "🎬 Roteiro React:",
+        value=roteiro_data["conteudo"],
+        height=400,
+        key="conteudo_react_edicao",
+        help="Você pode editar o roteiro gerado conforme necessário"
+    )
+    
+    # Estatísticas do roteiro
+    render_statistics_section(conteudo_editado)
+    
+    # Segmento usado
+    with st.expander("📄 Segmento do vídeo usado", expanded=False):
+        st.text_area(
+            "Trecho utilizado:",
+            value=roteiro_data["segmento"],
+            height=150,
+            disabled=True
+        )
+    
+    # Botões de ação
+    st.markdown("---")
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        if st.button("💾 Salvar no Histórico", type="primary", key="salvar_react"):
+            roteiro_data_completo = {
+                "titulo": titulo_roteiro,
+                "conteudo": conteudo_editado,
+                "formato": f"React {roteiro_data['estilo']}",
+                "instrucao": f"React {roteiro_data['estilo']} - {roteiro_data['descricao']}",
+                "data": datetime.now().isoformat(),
+                "timestamp": datetime.now().isoformat()
+            }
+            salvar_roteiro(roteiro_data_completo)
+            st.success("✅ Roteiro React salvo no histórico!")
+    
+    with col2:
+        st.download_button(
+            "⬇️ Baixar Roteiro",
+            data=conteudo_editado,
+            file_name=f"{titulo_roteiro}.txt",
+            mime="text/plain",
+            key="download_react"
+        )
+    
+    with col3:
+        if st.button("📋 Copiar", key="copiar_react"):
+            st.code(conteudo_editado, language="text")
+            st.info("📋 Roteiro exibido acima para cópia manual.")
+    
+    with col4:
+        if st.button("🔄 Novo React", key="novo_react"):
+            if "roteiro_react_atual" in st.session_state:
+                del st.session_state["roteiro_react_atual"]
+            st.rerun()
+    
+    # Dicas para melhorar o React
+    st.markdown("---")
+    with st.expander("💡 Dicas para um React de sucesso", expanded=False):
+        st.markdown("""
+        **🎯 Para React Padrão:**
+        - Certifique-se de que o trecho escolhido seja impactante
+        - A headline deve criar curiosidade imediata
+        - O conteúdo principal deve agregar valor real
+        - O posicionamento deve ser claro e memorável
+        
+        **⚡ Para React Bate-Bola:**
+        - A reação deve ser autêntica e espontânea
+        - Use expressões faciais e gestos marcantes
+        - O timing entre trecho e reação é crucial
+        - Mantenha a energia alta durante todo o vídeo
+        
+        **📱 Dicas gerais:**
+        - Teste diferentes ângulos de câmera
+        - Use boa iluminação e áudio claro
+        - Mantenha o ritmo dinâmico
+        - Inclua legendas para maior alcance
+        """)
+
+
+def render_tutorial_react():
+    """Renderiza tutorial sobre como fazer vídeos React"""
+    
+    st.markdown("### 📚 Tutorial: Como fazer um vídeo React")
+    
+    with st.expander("🎬 Passo a passo para gravar", expanded=False):
+        st.markdown("""
+        **1. Preparação:**
+        - Escolha um vídeo relevante para seu nicho
+        - Defina qual trecho você vai usar (30-50 segundos)
+        - Prepare seu posicionamento e CTA
+        
+        **2. Configuração técnica:**
+        - Use boa iluminação (luz natural ou ring light)
+        - Posicione a câmera na altura dos olhos
+        - Teste o áudio antes de gravar
+        
+        **3. Gravação:**
+        - Grave primeiro sua introdução (headline)
+        - Reproduza o trecho do vídeo original
+        - Grave sua reação/comentário imediatamente após
+        - Finalize com seu posicionamento e CTA
+        
+        **4. Edição:**
+        - Mantenha cortes dinâmicos
+        - Adicione legendas
+        - Use transições suaves
+        - Mantenha duração entre 60-90 segundos
+        """)
+    
+    with st.expander("🎯 Melhores práticas", expanded=False):
+        st.markdown("""
+        **✅ Faça:**
+        - Reações autênticas e espontâneas
+        - Comentários que agregam valor
+        - Posicionamento claro da sua expertise
+        - CTAs específicos e acionáveis
+        
+        **❌ Evite:**
+        - Reações exageradas ou falsas
+        - Comentários óbvios ou vazios
+        - Vídeos muito longos (+ 90s)
+        - Usar conteúdo protegido por direitos autorais
+        
+        **🔥 Para viralizar:**
+        - Escolha vídeos que já estão em alta
+        - Adicione uma perspectiva única
+        - Use hashtags relevantes
+        - Poste no horário de maior engajamento
+        """)
+
+
+# Função auxiliar para validação de entrada
+def validar_entrada_react(video_url, descricao_video):
+    """Valida as entradas do formulário React"""
+    
+    erros = []
+    
+    if not video_url.strip():
+        erros.append("Link do vídeo é obrigatório")
+    
+    if not descricao_video.strip():
+        erros.append("Descrição do vídeo é obrigatória")
+    
+    if video_url.strip():
+        url_valida, mensagem = validate_video_url(video_url)
+        if not url_valida:
+            erros.append(mensagem)
+    
+    return erros
+
